@@ -6,11 +6,11 @@ public class Archivo{
 
   private int noNodos;
   private int noEnlaces;
-  private int nodos[][];
-  private int enlaces[][];
-  private int tamPaquetes;
-  private int nodoOrigen;
-  private int nodoDestino;
+  private double nodos[][];
+  private double enlaces[][];
+  private double tamPaquetes;
+  private String nodoOrigen;
+  private String nodoDestino;
 
   public Archivo(){
 
@@ -42,32 +42,62 @@ public class Archivo{
     return this.noEnlaces;
   }
 
-  public int[][] getNodos(){
+  public String getNodos(int j){
 
-    return this.nodos;
+    return String.valueOf(this.nodos[j][0]);
   }
 
-  public int[][] getEnlaces(){
+  public double getTC(int j){
 
-    return this.enlaces;
+    return this.nodos[j][1];
   }
 
-  public int getTamPaquetes(){
+  public String getEnlaceOrigen(int j){
+
+    return String.valueOf(this.enlaces[j][0]);
+  }
+
+  public String getEnlaceDestino(int j){
+
+    return String.valueOf(this.enlaces[j][1]);
+  }
+
+  public double getEnlaceVelocidad(int j){
+
+    return this.enlaces[j][2];
+  }
+
+  public double getEnlaceDistancia(int j){
+
+    return this.enlaces[j][3];
+  }
+
+  public double getEnlaceDC(int j){
+
+    return this.enlaces[j][4];
+  }
+
+  public double getEnlaceDU(int j){
+
+    return this.enlaces[j][5];
+  }
+
+  public double getTamPaquetes(){
 
     return this.tamPaquetes;
   }
 
-  public int getNodoOrigen(){
+  public String getNodoOrigen(){
 
     return this.NodoOrigen;
   }
 
-  public int getNodoDestino(){
+  public String getNodoDestino(){
 
     return this.nodoDestino;
   }
 
-  public int dividir(BufferedReader bf){
+  public double dividir(BufferedReader bf){
 
     char car;
     String auxiliar = "";
@@ -77,7 +107,7 @@ public class Archivo{
       auxiliar += car;
       car = bf.read();
     }
-    return Integer.parseInt(auxiliar);
+    return Double.parseDouble(auxiliar);
   }
 
   public void leer(){
@@ -90,8 +120,8 @@ public class Archivo{
       System.out.println("El archivo está vacío");
     }
 
-    noNodos = dividir(bf);
-    noEnlaces = dividir(bf);
+    noNodos = (int)dividir(bf);
+    noEnlaces = (int)dividir(bf);
     for(int i = 0; i < noNodos; i++){
       nodos[i][0] = dividir(bf);
       nodos[i][1] = dividir(bf);
@@ -105,8 +135,8 @@ public class Archivo{
       enlaces[i][5] = dividir(bf);
     }
     tamPaquetes = dividir(bf);
-    nodoOrigen = dividir(bf);
-    nodoDestino = dividir(bf);
+    nodoOrigen = String.valueOf(dividir(bf));
+    nodoDestino = String.valueOf(dividir(bf));
   }
 
 }

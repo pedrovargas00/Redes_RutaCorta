@@ -12,9 +12,9 @@ public class Arista{
   private int peso;
   private double bits;
 
-  public Arista(char nombre, double velocidad, double distancia, double datosControl, double datosUsuario, Nodo inicio, Nodo fin){
+  public Arista(int nombre, double velocidad, double distancia, double datosControl, double datosUsuario, Nodo inicio, Nodo fin){
 
-    this.nombre = nombre;
+    this.nombre = (char)nombre;
     this.velocidad = velocidad;
     this.distancia = distancia;
     this.datosControl = datosControl;
@@ -37,11 +37,15 @@ public class Arista{
     this.bits = bits;
   }
 
-  public void getBits(){
-    return this.bits;
+  public char getNombre(){
+    return nombre;
   }
 
-  public int getVelocidad(){
+  public double getBits(){
+    return bits;
+  }
+
+  public double getVelocidad(){
     return velocidad;
   }
 
@@ -61,7 +65,7 @@ public class Arista{
     return inicio;
   }
 
-  public int getFin(){
+  public Nodo getFin(){
     return fin;
   }
 

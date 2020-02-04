@@ -6,7 +6,10 @@ public class Archivo{
 
   private int noNodos;
   private int noEnlaces;
-  private double nodos[][];
+  private ArrayList<String> nodos;
+  private double tc[];
+  private ArrayList<String> nodosOrigen;
+  private ArrayList<String> nodosDestino;
   private double enlaces[][];
   private double tamPaquetes;
   private String nodoOrigen;
@@ -16,127 +19,160 @@ public class Archivo{
 
     this.noNodos = 0;
     this.noEnlaces = 0;
+    this.nodos = new ArrayList();
+    this.nodosOrigen = new ArrayList();
+    this.nodosDestino = new ArrayList();
     this.tamPaquetes = 0;
-    this.nodoOrigen = 0;
-    this.nodoDestino = 0;
+    this.nodoOrigen = "";
+    this.nodoDestino = "";
   }
 
-  public void setNodos(int noNodos){
+  public void setTC(int noNodos){
 
-    this.nodos = new int[noNodos][2];
+    this.tc = new double[noNodos];
   }
 
   public void setEnlaces(int noEnlaces){
 
-    this.enlaces = new int[noEnlaces][6];
+    this.enlaces = new double[noEnlaces][4];
   }
-
 
   public int getNoNodos(){
 
-     return this.noNodos;
+     return noNodos;
   }
 
   public int getNoEnlaces(){
 
-    return this.noEnlaces;
+    return noEnlaces;
   }
 
   public String getNodos(int j){
 
-    return String.valueOf(this.nodos[j][0]);
+    return nodos.get(j);
   }
 
   public double getTC(int j){
 
-    return this.nodos[j][1];
+    return tc[j];
   }
 
   public String getEnlaceOrigen(int j){
 
-    return String.valueOf(this.enlaces[j][0]);
+    return nodosOrigen.get(j);
   }
 
   public String getEnlaceDestino(int j){
 
-    return String.valueOf(this.enlaces[j][1]);
+    return nodosDestino.get(j);
   }
 
   public double getEnlaceVelocidad(int j){
 
-    return this.enlaces[j][2];
+    return enlaces[j][0];
   }
 
   public double getEnlaceDistancia(int j){
 
-    return this.enlaces[j][3];
+    return enlaces[j][1];
   }
 
   public double getEnlaceDC(int j){
 
-    return this.enlaces[j][4];
+    return enlaces[j][2];
   }
 
   public double getEnlaceDU(int j){
 
-    return this.enlaces[j][5];
+    return enlaces[j][3];
   }
 
   public double getTamPaquetes(){
 
-    return this.tamPaquetes;
+    return tamPaquetes;
   }
 
   public String getNodoOrigen(){
 
-    return this.NodoOrigen;
+    return nodoOrigen;
   }
 
   public String getNodoDestino(){
 
-    return this.nodoDestino;
+    return nodoDestino;
   }
 
-  public double dividir(BufferedReader bf){
+  public ArrayList<String> dividir(BufferedReader bf)throws IOException {
 
-    char car;
-    String auxiliar = "";
+    ArrayList<String> entrada = new ArrayList();
+    String[] in;
+    String auxiliar;
 
-    car = bf.read();
-    while((car != ',') || (car != '\n')){
-      auxiliar += car;
-      car = bf.read();
+    while((auxiliar = bf.readLine()) != null){
+      in = auxiliar.split(",");
+      for(int i = 0; i < in.length; i++)
+        entrada.add(in[i]);
     }
-    return Double.parseDouble(auxiliar);
+
+    return entrada;
   }
 
-  public void leer(){
+  public void leer(String nombre)throws IOException, FileNotFoundException {
 
-    BufferedReader bf = new BufferedReader(new FileReader("entrada.txt"));
+    BufferedReader bf = new BufferedReader(new FileReader(nombre));
+    ArrayList<String> entrada = new ArrayList();
     String auxiliar = "";
-    int fila = 0;
+    int fila = 0, j = 0;
 
     if(bf.ready() == false){
       System.out.println("El archivo está vacío");
     }
 
-    noNodos = (int)dividir(bf);
-    noEnlaces = (int)dividir(bf);
+    entrada.addAll(dividir(bf));
+    noNodos = Integer.parseInt(entrada.get(j));
+    j++;
+    System.out.println("noNodos: " + noNodos);
+    noEnlaces = Integer.parseInt(entrada.get(j));
+    j++;
+    System.out.println("noEnlace: " + noEnlaces);
+    setTC(noNodos);
+    setEnlaces(noEnlaces);
     for(int i = 0; i < noNodos; i++){
-      nodos[i][0] = dividir(bf);
-      nodos[i][1] = dividir(bf);
+      nodos.add(entrada.get(j));
+      j++;
+      System.out.println("Nodo: " + nodos.get(i));
+      tc[i] = Double.parseDouble(entrada.get(j));
+      j++;
+      System.out.println("TC: " + tc[i]);
     }
     for(int i = 0; i < noEnlaces; i++){
-      enlaces[i][0] = dividir(bf);
-      enlaces[i][1] = dividir(bf);
-      enlaces[i][2] = dividir(bf);
-      enlaces[i][3] = dividir(bf);
-      enlaces[i][4] = dividir(bf);
-      enlaces[i][5] = dividir(bf);
+      nodosOrigen.add(entrada.get(j));
+      j++;
+      System.out.println("Origen: " + nodosOrigen.get(i));
+      nodosDestino.add(entrada.get(j));
+      j++;
+      System.out.println("Destino: " + nodosDestino.get(i));
+      enlaces[i][0] = Double.parseDouble(entrada.get(j));
+      j++;
+      System.out.println("Velocidad: " + enlaces[i][0]);
+      enlaces[i][1] = Double.parseDouble(entrada.get(j));
+      j++;
+      System.out.println("Distancia: " + enlaces[i][1]);
+      enlaces[i][2] = Double.parseDouble(entrada.get(j));
+      j++;
+      System.out.println("DC: " + enlaces[i][2]);
+      enlaces[i][3] = Double.parseDouble(entrada.get(j));
+      j++;
+      System.out.println("DU: " + enlaces[i][3]);
     }
-    tamPaquetes = dividir(bf);
-    nodoOrigen = String.valueOf(dividir(bf));
-    nodoDestino = String.valueOf(dividir(bf));
+    tamPaquetes = Double.parseDouble(entrada.get(j));
+    j++;
+    System.out.println("Paquete: " + tamPaquetes);
+    nodoOrigen = entrada.get(j);
+    j++;
+    System.out.println("nodoOrigen: " + nodoOrigen);
+    nodoDestino = entrada.get(j);
+    System.out.println("nodoDestino: " + nodoDestino);
   }
 
 }

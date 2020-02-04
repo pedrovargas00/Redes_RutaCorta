@@ -7,6 +7,7 @@ public class Arista{
   private double distancia;
   private double datosControl;
   private double datosUsuario;
+  private double paquetes;
   private Nodo inicio;
   private Nodo fin;
   private int peso;
@@ -19,10 +20,11 @@ public class Arista{
     this.distancia = distancia;
     this.datosControl = datosControl;
     this.datosUsuario = datosUsuario;
+    this.paquetes = 1.0;
     this.inicio = inicio;
     this.fin = fin;
     this.peso = 1;
-    this.bits = 0;
+    this.bits = 0.0;
   }
 
   public void setVelocidad(double velocidad){
@@ -35,6 +37,14 @@ public class Arista{
 
   public void setBits(double bits){
     this.bits = bits;
+  }
+
+  public void setPaquetes(double paquetes){
+    this.paquetes = paquetes;
+  }
+
+  public double getPaquetes(){
+    return paquetes;
   }
 
   public char getNombre(){

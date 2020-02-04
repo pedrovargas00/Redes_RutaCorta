@@ -131,48 +131,35 @@ public class Archivo{
     entrada.addAll(dividir(bf));
     noNodos = Integer.parseInt(entrada.get(j));
     j++;
-    System.out.println("noNodos: " + noNodos);
     noEnlaces = Integer.parseInt(entrada.get(j));
     j++;
-    System.out.println("noEnlace: " + noEnlaces);
     setTC(noNodos);
     setEnlaces(noEnlaces);
     for(int i = 0; i < noNodos; i++){
       nodos.add(entrada.get(j));
       j++;
-      System.out.println("Nodo: " + nodos.get(i));
       tc[i] = Double.parseDouble(entrada.get(j));
       j++;
-      System.out.println("TC: " + tc[i]);
     }
     for(int i = 0; i < noEnlaces; i++){
       nodosOrigen.add(entrada.get(j));
       j++;
-      System.out.println("Origen: " + nodosOrigen.get(i));
       nodosDestino.add(entrada.get(j));
       j++;
-      System.out.println("Destino: " + nodosDestino.get(i));
       enlaces[i][0] = Double.parseDouble(entrada.get(j));
       j++;
-      System.out.println("Velocidad: " + enlaces[i][0]);
       enlaces[i][1] = Double.parseDouble(entrada.get(j));
       j++;
-      System.out.println("Distancia: " + enlaces[i][1]);
       enlaces[i][2] = Double.parseDouble(entrada.get(j));
       j++;
-      System.out.println("DC: " + enlaces[i][2]);
       enlaces[i][3] = Double.parseDouble(entrada.get(j));
       j++;
-      System.out.println("DU: " + enlaces[i][3]);
     }
     tamPaquetes = Double.parseDouble(entrada.get(j));
     j++;
-    System.out.println("Paquete: " + tamPaquetes);
     nodoOrigen = entrada.get(j);
     j++;
-    System.out.println("nodoOrigen: " + nodoOrigen);
     nodoDestino = entrada.get(j);
-    System.out.println("nodoDestino: " + nodoDestino);
-  }
+    }
 
 }

@@ -10,9 +10,15 @@ public class Principal{
 
     System.out.println(args[0]);
     archivo.leer(args[0]);
+    System.out.println("\n");
     grafo.matrizAdyacencia();
+    System.out.println("\n");
     grafo.crearGrafo();
+    System.out.println("\n");
     grafo.mostrarMatriz();
+    System.out.println("\n");
+    grafo.operacionesArista();
+    System.out.println("\n");
   }
 
 }

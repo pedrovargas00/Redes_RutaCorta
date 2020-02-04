@@ -15,6 +15,10 @@ public class Nodo{
     this.visitado = false;
   }
 
+  public void setVisitado(boolean visitado){
+      this.visitado = visitado;
+  }
+
   public String getNombre(){
     return nombre;
   }

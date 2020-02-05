@@ -7,6 +7,7 @@ public class Grafo{
   private ArrayList<Nodo> nodos;
   private ArrayList<Arista> arista;
   private Operaciones operaciones;
+  private Camino ruta;
   private int matrizAdyacencia[][];
   private ArrayList<String> recorridos;
   private ArrayList<Nodo> camino;
@@ -19,6 +20,13 @@ public class Grafo{
     this.recorridos = new ArrayList();
     this.camino = new ArrayList();
     this.operaciones = new Operaciones();
+  }
+
+  public void iniciarCamino(Camino ruta){
+
+    ruta.setTamTransferencia(operaciones.conversionGBytesaBytes(datos.getTamPaquetes()));
+    ruta.setInicio(datos.getNodoOrigen());
+    ruta.setFin(datos.getNodoDestino());
   }
 
   public void matrizAdyacencia(){
@@ -59,6 +67,8 @@ public class Grafo{
 
     for(int i = 0; i < datos.getNoEnlaces(); i++){
       arista.add(new Arista((65 + i), datos.getEnlaceVelocidad(i), datos.getEnlaceDistancia(i), datos.getEnlaceDC(i), datos.getEnlaceDU(i), buscarNodo(datos.getEnlaceOrigen(i)), buscarNodo(datos.getEnlaceDestino(i))));
+      System.out.println("Arista: " + arista.get(i).getNombre() + " Inicio: " + arista.get(i).getInicio().getNombre() + "Final: " + arista.get(i).getFin().getNombre());
+      //System.out.println();
       matrizAdyacencia[arista.get(i).getInicio().getIndex()][arista.get(i).getFin().getIndex()] = 1;
       matrizAdyacencia[arista.get(i).getFin().getIndex()][arista.get(i).getInicio().getIndex()] = 1;
     }
@@ -73,20 +83,8 @@ public class Grafo{
     return nodos.get(nodos.size() - 1);
   }
 
-  public void operacionesArista(){
+  //Cambiar
 
-    for(int i = 0; i < arista.size(); i++){
-    //for(Arista ar: arista){
-      operaciones.conversionMtaKt(arista.get(i));
-      operaciones.conversionBytesaMBits(arista.get(i));
-      if((i + 1) != arista.size())
-        operaciones.divisionPaquetes(arista.get(i), arista.get(i + 1));
-      else
-        operaciones.divisionPaquetes(arista.get(i), null);
-      operaciones.latencia(arista.get(i));
-    }
-
-  }
 
   public void mostrarMatriz(){
 
@@ -168,8 +166,25 @@ public class Grafo{
 
   public void mostrarRecorridos(){
 
-    for(int i = 0; i < recorridos.size(); i++)
+    for(int i = 0; i < recorridos.size(); i++){
       System.out.println("Rec: " + recorridos.get(i));
+      ruta = new Camino(this, recorridos.get(i));
+      iniciarCamino(ruta);
+      ruta.setCamino();
+      ruta.setAristas();
+      System.out.println("Tamaño: " + ruta.getTamanoArista());
+      for(int j = 0; j < ruta.getTamanoArista(); j++)
+        operaciones.operacionesArista(ruta.getArista(j), ruta.getArista(j + 1));
+      ruta.setLatenciaTotal();
+      ruta.setCantidadPaquetes(operaciones.cantidadPaquetes(ruta));
+      ruta.setTiempoTranferencia(operaciones.tamanoTranferencia(ruta));
+    }
+  }
+
+  public void operacionesFinales(){
+
+    //  ruta.setTiempoTranferencia();
+    //  ruta.setCantidadPaquetes();
   }
 
 }

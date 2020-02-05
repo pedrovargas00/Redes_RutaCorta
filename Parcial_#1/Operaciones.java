@@ -38,7 +38,7 @@ public class Operaciones{
     System.out.println("Bits " + arista.getBits());
   }
 
-  public double latencia(Arista conexion){
+  public void latencia(Arista conexion){
 
     double aux;
 
@@ -46,7 +46,7 @@ public class Operaciones{
     aux = (conexion.getDistancia() / 300000) + (conexion.getBits() / conexion.getVelocidad());
     System.out.println("Aux: " + aux);
     System.out.println("Latencia " + ((aux + conexion.getFin().getTiempoCola()) * conexion.getPaquetes()));
-    return ((aux + conexion.getFin().getTiempoCola()) * conexion.getPaquetes());
+    conexion.setLatencia((aux + conexion.getFin().getTiempoCola()) * conexion.getPaquetes());
   }
 
   public void cantidadPaquetes(double tamPaquetes, Arista arista){

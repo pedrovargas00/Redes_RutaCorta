@@ -9,6 +9,7 @@ public class Grafo{
   private Operaciones operaciones;
   private int matrizAdyacencia[][];
   private ArrayList<String> recorridos;
+  private ArrayList<Nodo> camino;
 
   public Grafo(Archivo datos){
 
@@ -16,6 +17,7 @@ public class Grafo{
     this.nodos = new ArrayList();
     this.arista = new ArrayList();
     this.recorridos = new ArrayList();
+    this.camino = new ArrayList();
     this.operaciones = new Operaciones();
   }
 
@@ -63,6 +65,14 @@ public class Grafo{
 
   }
 
+  public Nodo getInicio(){
+    return nodos.get(0);
+  }
+
+  public Nodo getFinal(){
+    return nodos.get(nodos.size() - 1);
+  }
+
   public void operacionesArista(){
 
     for(int i = 0; i < arista.size(); i++){
@@ -93,81 +103,73 @@ public class Grafo{
     agregarAristas();
   }
 
-  public void desvisitar(ArraList<Nodo> lista){
+  public ArrayList buscarAristas(ArrayList<Nodo> nodos){
 
-    for(Nodo n: lista)
-      n.setVisitado(false);
+    int i = 0;
+    ArrayList<Arista> ar = new ArrayList();
+
+    for(Arista a: arista){
+      if(nodos.get(i) == null)
+        return ar;
+      if((a.getInicio().getNombre().equalsIgnoreCase(nodos.get(i).getNombre())) && (a.getFin().getNombre().equalsIgnoreCase(nodos.get(i + 1).getNombre()))){
+        ar.add(a);
+        i++;
+      }
+    }
+    return ar;
   }
 
-  public void desvisitar(){
-
-    for(Nodo n: nodos)
-      n.setVisitado(false);
-  }
-
-  public ArrayList<Nodo> buscarAdyacentes(Nodo nodo){
+  public ArrayList buscarAdyacentes(Nodo nodo){
 
     ArrayList<Nodo> aux = new ArrayList();
-    Nodo temporal;
 
     for(int i = 0;  i < matrizAdyacencia[nodo.getIndex()].length; i++)
-      if(matrizAdyacencia[nodo.getIndex()][i] != 0){
-        temporal = buscarNodo(i);
-        if(temporal.getVisitado() == false)
-          aux.add(temporal);
-      }
+      if(matrizAdyacencia[nodo.getIndex()][i] != 0)
+        aux.add(nodos.get(i));
 
     return aux;
   }
 
-  public void recorrido(){
+  public void guardarCaminos(ArrayList<Nodo> cm){
 
-    Nodo inicio = nodos.get(0), final = nodos.get(nodos.size() - 1), nodo;
-    ArrayLits<Nodo> adyacentes = new ArrayList();
-    //ArrayLits<Nodo> aux = new ArrayList();
-    String camino = "";
+    String aux = "";
 
-
-    adyacentes.addAll(buscarAdyacentes(inicio));
-    aux.addAll(adyacentes);
-
-    while(aux.empty() == false){
-      if(inicio.getNombre().equalsIgnoreCase(final.getNombre()))
-        recorridos.add(camino);
-      inicio.setVisitado(true);
-      camino += (inicio.getNombre() + ", ");
-      nodo = adyacentes.get(0);
-      adyacentes.clear();
-      adyacentes.addAll(buscarAdyacentes(inicio));
-    }
-
+    for(Nodo n: cm)
+      aux += (n.getNombre() + "-");
+    recorridos.add(aux);
   }
 
-  public ArrayList bfs(Nodo inicio){
+  public ArrayList recorrido(Nodo inicio, Nodo ultimo){
 
-    ArrayList<Vertice> lista = new ArrayList();
-    Queue<Vertice> cola = new LinkedList();
-    boolean indicadorAdyacentes = false;
+    ArrayList<Nodo> adyacentes = new ArrayList();
 
+    if(inicio.getNombre().equalsIgnoreCase(ultimo.getNombre())){
+      camino.add(ultimo);
+      inicio.setVisitado(false);
+      for(Nodo f: camino)
+        System.out.println(f.getNombre());
+      guardarCaminos(camino);
+      System.out.println("Corr " + recorridos.get(0));
+      return camino;
+    }
+    adyacentes.addAll(buscarAdyacentes(inicio));
     inicio.setVisitado(true);
-    cola.add(inicio);
-
-    while(cola.isEmpty() == false){
-      lista.add(cola.remove());
-      indicadorAdyacentes = false;
-      for(Nodo n: nodos){
-        if(n.getVisitado() == false){
-          if(indicadorAdyacentes == false){
-            //n.setVisitado(true);
-            cola.add(n);
-            indicadorAdyacentes = true;
-          } else
-            n.setVisitado(true);
-        }
+    camino.add(inicio);
+    for(Nodo n: adyacentes){
+      if(!n.getVisitado()){
+        recorrido(n, ultimo);
+        camino.remove(camino.size() - 1);
       }
     }
-    desvisitar();
-    return b;
+
+    inicio.setVisitado(false);
+    return camino;
+  }
+
+  public void mostrarRecorridos(){
+
+    for(int i = 0; i < recorridos.size(); i++)
+      System.out.println("Rec: " + recorridos.get(i));
   }
 
 }

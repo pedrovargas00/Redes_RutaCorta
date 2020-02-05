@@ -19,6 +19,8 @@ public class Principal{
     System.out.println("\n");
     grafo.operacionesArista();
     System.out.println("\n");
+    grafo.recorrido(grafo.getInicio(), grafo.getFinal());
+    grafo.mostrarRecorridos();
   }
 
 }

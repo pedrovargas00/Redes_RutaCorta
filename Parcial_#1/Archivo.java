@@ -121,8 +121,7 @@ public class Archivo{
 
     BufferedReader bf = new BufferedReader(new FileReader(nombre));
     ArrayList<String> entrada = new ArrayList();
-    String auxiliar = "";
-    int fila = 0, j = 0;
+    int j = 0;
 
     if(bf.ready() == false){
       System.out.println("El archivo está vacío");

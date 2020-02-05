@@ -12,6 +12,7 @@ public class Arista{
   private Nodo fin;
   private int peso;
   private double bits;
+  private double latencia;
 
   public Arista(int nombre, double velocidad, double distancia, double datosControl, double datosUsuario, Nodo inicio, Nodo fin){
 
@@ -25,6 +26,11 @@ public class Arista{
     this.fin = fin;
     this.peso = 1;
     this.bits = 0.0;
+    this.latencia = 0;
+  }
+
+  public void setLatencia(double latencia){
+    this.latencia = latencia;
   }
 
   public void setVelocidad(double velocidad){
@@ -43,6 +49,10 @@ public class Arista{
     this.paquetes = paquetes;
   }
 
+  public double getLatencia(){
+    return latencia;
+  }
+  
   public double getPaquetes(){
     return paquetes;
   }

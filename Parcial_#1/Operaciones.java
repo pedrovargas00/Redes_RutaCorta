@@ -55,6 +55,11 @@ public class Operaciones{
     return (giga * Math.pow(1024, 3));
   }
 
+  public double conversionSegAHr(double segundos){
+
+    return ();
+  }
+
   public void operacionesArista(Arista arista1, Arista arista2){
 
       conversionMtaKt(arista1);

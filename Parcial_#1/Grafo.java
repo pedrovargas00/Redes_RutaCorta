@@ -76,11 +76,21 @@ public class Grafo{
   }
 
   public Nodo getInicio(){
-    return nodos.get(0);
+
+    for(Nodo n: nodos)
+      if(n.getNombre().equalsIgnoreCase(datos.getNodoOrigen()))
+        return n;
+
+    return null;
   }
 
   public Nodo getFinal(){
-    return nodos.get(nodos.size() - 1);
+
+    for(Nodo n: nodos)
+      if(n.getNombre().equalsIgnoreCase(datos.getNodoDestino()))
+        return n;
+
+    return null;
   }
 
   //Cambiar

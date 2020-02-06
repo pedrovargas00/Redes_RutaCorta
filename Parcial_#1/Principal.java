@@ -8,19 +8,13 @@ public class Principal{
     Archivo archivo = new Archivo();
     Grafo grafo = new Grafo(archivo);
 
-    System.out.println(args[0]);
+    System.out.println("");
     archivo.leer(args[0]);
-    System.out.println("\n");
     grafo.matrizAdyacencia();
-    System.out.println("\n");
     grafo.crearGrafo();
-    System.out.println("\n");
-    grafo.mostrarMatriz();
-    System.out.println("\n");
-    //grafo.operacionesArista();
-    System.out.println("\n");
     grafo.recorrido(grafo.getInicio(), grafo.getFinal());
     grafo.mostrarRecorridos();
+    grafo.caminoCorto();
   }
 
 }

@@ -29,23 +29,18 @@ public class Camino{
 
     String tem[] = camino.split("-");
 
-    for(int i = 0; i < tem.length; i++){
+    for(int i = 0; i < tem.length; i++)
       caminoNodo.add(grafo.buscarNodo(tem[i]));
-      System.out.println("tem[i] " + tem[i] + " Nodo: " + caminoNodo.get(i).getNombre());
-    }
   }
 
   public void setAristas(){
 
     this.aristas.addAll(grafo.buscarAristas(caminoNodo));
-    for(Arista a: aristas)
-      System.out.println("A: " + a.getNombre());
   }
 
   public void setTamTransferencia(double tamTransferencia){
 
     this.tamTransferencia = tamTransferencia;
-    System.out.println("tamTransferencia: " + this.tamTransferencia);
   }
 
   public void setInicio(String inicio){
@@ -56,6 +51,11 @@ public class Camino{
   public void setFin(String fin){
 
     this.fin = fin;
+  }
+
+  public String getCamino(){
+
+    return camino;
   }
 
   public double getTamTransferencia(){
@@ -88,22 +88,21 @@ public class Camino{
 
   public void setLatenciaTotal(){
 
-    for(Arista a: aristas){
+    for(Arista a: aristas)
       latenciaTotal += a.getLatencia();
-      System.out.println("latenciaTotal: " + latenciaTotal + " de " + a.getNombre());
-    }
+    System.out.println("Latencia del camino: " + latenciaTotal + " seg");
   }
 
   public void setCantidadPaquetes(double cantidadPaquetes){
 
     this.cantidadPaquetes = cantidadPaquetes;
-    System.out.println("CantidadPaquetes: " + this.cantidadPaquetes);
+    System.out.println("Cantidad de paquetes del camino: " + cantidadPaquetes);
   }
 
   public void setTiempoTranferencia(double tiempoTransferencia){
 
     this.tiempoTransferencia = tiempoTransferencia;
-    System.out.println("TT: " + this.tiempoTransferencia);
+    System.out.println("Tiempo de Transferencia del camino: " + tiempoTransferencia + " seg");
   }
 
   public double getCantidadPaquetes(){
